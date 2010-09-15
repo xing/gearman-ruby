@@ -104,8 +104,7 @@ class Client
     hostport = get_hostport_for_socket(sock)
     if not hostport
       inet, port, host, ip = s.addr
-      Util.logger.error "GearmanRuby: Got socket for #{ip}:#{port}, which we don't " +
-        "know about -- closing"
+      Util.logger.error "GearmanRuby: Got socket for #{ip}:#{port}, which we don't know about -- closing"
       sock.close
       return
     end

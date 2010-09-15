@@ -269,7 +269,7 @@ class Worker
       return false
     end
 
-    Util.logger.error "GearmanRuby: Got job_assign with handle #{handle} and #{data.size} byte(s) " +
+    Util.logger.debug "GearmanRuby: Got job_assign with handle #{handle} and #{data.size} byte(s) " +
       "from #{hostport}"
 
     ability = @abilities[func]
