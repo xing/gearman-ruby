@@ -19,6 +19,10 @@ class TaskSet
     @merge_hash_to_hostport = {}  # Fixnum -> "host:port"
   end
 
+  def timed_out?
+    !!@timed_out
+  end
+
   ##
   # Add a new task to this TaskSet.
   #
@@ -39,6 +43,7 @@ class TaskSet
   # @return             true if the task was created successfully, false
   #                     otherwise
   def add_task_internal(task, reset_state=true)
+    @timed_out = false
     task.reset_state if reset_state
     req = task.get_submit_packet()
 
@@ -75,6 +80,7 @@ class TaskSet
         Util.logger.debug "GearmanRuby: Got timeout on read from #{hostport}"
         @task_waiting_for_handle = nil
         @client.close_socket(sock)
+        @timed_out = true
         return false
       end
     end
@@ -226,6 +232,8 @@ class TaskSet
   #
   # @param timeout  maximum amount of time to wait, in seconds
   def wait(timeout = 1)
+    @timed_out = false
+
     end_time = if timeout
       Time.now.to_f + timeout
     else
@@ -246,6 +254,7 @@ class TaskSet
         # close them for now
         @sockets.values.each {|s| @client.close_socket(s) }
         @sockets = {}
+        @timed_out = true
         return false
       end
       ready_socks[0].each do |sock|

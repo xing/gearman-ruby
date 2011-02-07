@@ -575,6 +575,7 @@ class TestClient < Test::Unit::TestCase
     s.wait
 
     assert_equal(false, res)
+    assert taskset.timed_out?
 
     # Now create a task, but only return a partial packet for
     # work_complete.  The client should again time out after 0.1 sec.
@@ -590,6 +591,7 @@ class TestClient < Test::Unit::TestCase
     s.wait
 
     assert_equal(false, res)
+    assert taskset.timed_out?
   end
   
   ##
