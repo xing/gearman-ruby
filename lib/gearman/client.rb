@@ -9,6 +9,8 @@ module Gearman
 # == Description
 # A client for communicating with Gearman job servers.
 class Client
+  class NoJobServersAvailableError < Exception; end;
+  
   ##
   # Create a new client.
   #
@@ -55,7 +57,7 @@ class Client
   # @return  "host:port"
   def get_job_server
 
-    raise Exception.new('No servers available') if @job_servers.empty?
+    raise NoJobServersAvailableError.new('No servers available') if @job_servers.empty?
 
     @server_counter += 1
     # Return a specific server if one's been set.
