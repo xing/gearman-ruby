@@ -6,8 +6,6 @@ require 'logger'
 
 module Gearman
 
-  class ServerDownException < Exception; end
-
 # = Util
 #
 # == Description

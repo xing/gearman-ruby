@@ -58,19 +58,16 @@
 #
 module Gearman
 
+class InvalidArgsError < Exception; end
+class ProtocolError < Exception; end
+class NetworkError < Exception; end
+class NoJobServersAvailableError < Exception; end
+class ServerDownException < Exception; end
+
 require File.dirname(__FILE__) + '/gearman/client'
 require File.dirname(__FILE__) + '/gearman/task'
 require File.dirname(__FILE__) + '/gearman/taskset'
 require File.dirname(__FILE__) + '/gearman/util'
 require File.dirname(__FILE__) + '/gearman/worker'
-
-class InvalidArgsError < Exception
-end
-
-class ProtocolError < Exception
-end
-
-class NetworkError < Exception
-end
 
 end

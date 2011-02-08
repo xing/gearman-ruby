@@ -9,7 +9,6 @@ module Gearman
 # == Description
 # A client for communicating with Gearman job servers.
 class Client
-  class NoJobServersAvailableError < Exception; end;
   
   ##
   # Create a new client.
