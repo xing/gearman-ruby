@@ -6,8 +6,8 @@ require 'thread'
 class FakeJobServer
   def initialize(tester,port=nil)
     @tester = tester
-    @serv = TCPserver.open(0) if port.nil?
-    @serv = TCPserver.open('localhost',port) unless port.nil?
+    @serv = TCPServer.open(0) if port.nil?
+    @serv = TCPServer.open('localhost',port) unless port.nil?
     @port = @serv.addr[1]
   end
   attr_reader :port
@@ -21,7 +21,7 @@ class FakeJobServer
   end
 
   def start
-    @serv = TCPserver.open(@port)
+    @serv = TCPServer.open(@port)
   end
 
   def expect_connection
@@ -53,7 +53,7 @@ class FakeJobServer
 
   def send_response(sock, type, data='', bogus_size=nil)
     type_num = Gearman::Util::NUMS[type.to_sym] || 0
-    response = "\0RES" + [type_num, (bogus_size or data.size)].pack('NN') + data
+    response = "\0RES" + [type_num, (bogus_size or data.bytesize)].pack('NN') + data
     sock.write(response)
   end
 end

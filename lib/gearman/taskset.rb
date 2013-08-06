@@ -119,7 +119,7 @@ class TaskSet
   # @param data      data returned in packet from server
   def handle_work_complete(hostport, data)
     handle, data = data.split("\0", 2)
-    Util.logger.debug "GearmanRuby: Got work_complete with handle #{handle} and #{data ? data.size : '0'} byte(s) of data from #{hostport}"
+    Util.logger.debug "GearmanRuby: Got work_complete with handle #{handle} and #{data ? data.bytesize : '0'} byte(s) of data from #{hostport}"
     tasks_in_progress(hostport, handle, true).each do |t|
       t.handle_completion(data)
       @finished_tasks << t
@@ -188,7 +188,7 @@ class TaskSet
   # @param data       data returned in packet from server
   def handle_work_data(hostport, data)
     handle, data = data.split("\0", 2)
-    Util.logger.debug "GearmanRuby: Got work_data with handle #{handle} and #{data ? data.size : '0'} byte(s) of data from #{hostport}"
+    Util.logger.debug "GearmanRuby: Got work_data with handle #{handle} and #{data ? data.bytesize : '0'} byte(s) of data from #{hostport}"
 
     js_handle = Util.handle_to_str(hostport, handle)
     tasks = @tasks_in_progress[js_handle]

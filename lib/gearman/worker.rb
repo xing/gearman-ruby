@@ -269,7 +269,7 @@ class Worker
       return false
     end
 
-    Util.logger.debug "GearmanRuby: Got job_assign with handle #{handle} and #{data.size} byte(s) " +
+    Util.logger.debug "GearmanRuby: Got job_assign with handle #{handle} and #{data.bytesize} byte(s) " +
       "from #{hostport}"
 
     ability = @abilities[func]
@@ -290,7 +290,7 @@ class Worker
 
     cmd = if ret && exception.nil?
       ret = ret.to_s
-      Util.logger.debug "GearmanRuby: Sending work_complete for #{handle} with #{ret.size} byte(s) " +
+      Util.logger.debug "GearmanRuby: Sending work_complete for #{handle} with #{ret.bytesize} byte(s) " +
         "to #{hostport}"
       [ Util.pack_request(:work_complete, "#{handle}\0#{ret}") ]
     elsif exception.nil?

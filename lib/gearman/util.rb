@@ -81,7 +81,7 @@ class Util
     type_num = NUMS[type_name.to_sym]
     raise InvalidArgsError, "Invalid type name '#{type_name}'" unless type_num
     arg = '' if not arg
-    "\0REQ" + [type_num, arg.size].pack('NN') + arg
+    "\0REQ" + [type_num, arg.bytesize].pack('NN') + arg
   end
 
   ##
@@ -111,13 +111,13 @@ class Util
   def Util.timed_recv(sock, len, timeout=nil)
     data = ''
     end_time = Time.now.to_f + timeout if timeout
-    while data.size < len and (not timeout or Time.now.to_f < end_time) do
+    while data.bytesize < len and (not timeout or Time.now.to_f < end_time) do
       IO::select([sock], nil, nil, timeout ? end_time - Time.now.to_f : nil) \
         or break
-      data += sock.readpartial(len - data.size)
+      data += sock.readpartial(len - data.bytesize)
     end
-    if data.size < len
-      raise NetworkError, "Read #{data.size} byte(s) instead of #{len}"
+    if data.bytesize < len
+      raise NetworkError, "Read #{data.bytesize} byte(s) instead of #{len}"
     end
     data
   end
@@ -148,8 +148,8 @@ class Util
   # @param req   request packet to send
   def Util.send_request(sock, req)
     len = with_safe_socket_op{ sock.write(req) }
-    if len != req.size
-      raise NetworkError, "Wrote #{len} instead of #{req.size}"
+    if len != req.bytesize
+      raise NetworkError, "Wrote #{len} instead of #{req.bytesize}"
     end
   end
 
