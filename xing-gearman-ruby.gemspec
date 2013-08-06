@@ -106,5 +106,7 @@ Gem::Specification.new do |s|
     end
   else
   end
+
+  s.add_development_dependency "mocha"
 end
 

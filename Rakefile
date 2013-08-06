@@ -1,7 +1,7 @@
 require 'rake'
 require 'rake/testtask'
-require 'rake/rdoctask'
-require 'rcov/rcovtask'
+#require 'rake/rdoctask'
+#require 'rcov/rcovtask'
  
 begin
   require 'jeweler'
@@ -23,18 +23,18 @@ Rake::TestTask.new do |t|
   t.verbose = false
 end
 
-Rake::RDocTask.new do |rdoc|
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = 'Gearman Ruby'
-  rdoc.options << '--line-numbers' << '--inline-source'
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
-end
+# Rake::RDocTask.new do |rdoc|
+#   rdoc.rdoc_dir = 'rdoc'
+#   rdoc.title = 'Gearman Ruby'
+#   rdoc.options << '--line-numbers' << '--inline-source'
+#   rdoc.rdoc_files.include('README*')
+#   rdoc.rdoc_files.include('lib/**/*.rb')
+# end
 
-Rcov::RcovTask.new do |t|
-  t.libs << "test"
-  t.test_files = FileList['test/*_test.rb']
-  t.verbose = true
-end
+# Rcov::RcovTask.new do |t|
+#   t.libs << "test"
+#   t.test_files = FileList['test/*_test.rb']
+#   t.verbose = true
+# end
 
-task :default => :rcov
+task :default => :test
